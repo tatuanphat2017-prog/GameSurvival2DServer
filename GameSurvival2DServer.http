@@ -1,0 +1,6 @@
+@GameSurvival2DServer_HostAddress = http://localhost:5207
+
+GET {{GameSurvival2DServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
