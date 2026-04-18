@@ -38,10 +38,15 @@ CREATE TABLE SaveGames (
 -- 4. Inventory
 CREATE TABLE Inventory (
     Id INT IDENTITY(1,1) PRIMARY KEY,
-    AccountId INT,
-    ItemName NVARCHAR(100),
-    Quantity INT,
-    FOREIGN KEY (AccountId) REFERENCES Accounts(Id)
+    SaveGameId INT NOT NULL,
+    ItemId INT NOT NULL,
+    Quantity INT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Inventory_SaveGames
+        FOREIGN KEY (SaveGameId) REFERENCES SaveGames(Id),
+
+    CONSTRAINT FK_Inventory_Items
+        FOREIGN KEY (ItemId) REFERENCES Items(Id)
 );
 
 -- 5. Leaderboard
@@ -57,8 +62,23 @@ CREATE TABLE Leaderboards (
 -- 6. AdminLog
 CREATE TABLE AdminLogs (
     Id INT IDENTITY(1,1) PRIMARY KEY,
-    AdminId INT,
-    TargetAccountId INT,
+    AdminId INT NOT NULL,
+    TargetAccountId INT NOT NULL,
     Reason NVARCHAR(255),
-    CreatedAt DATETIME DEFAULT GETDATE()
+    CreatedAt DATETIME DEFAULT GETDATE(),
+
+    CONSTRAINT FK_AdminLogs_Admin
+        FOREIGN KEY (AdminId) REFERENCES Accounts(Id),
+
+    CONSTRAINT FK_AdminLogs_TargetAccount
+        FOREIGN KEY (TargetAccountId) REFERENCES Accounts(Id)
+);
+
+-- 7. Items
+CREATE TABLE Items (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ItemName NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255),
+    HealAmount INT DEFAULT 0,
+    ImageUrl NVARCHAR(255)
 );

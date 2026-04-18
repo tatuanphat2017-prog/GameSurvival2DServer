@@ -14,6 +14,7 @@ namespace GameSurvival2DServer.Database
         public DbSet<PlayerProfile> PlayerProfiles { get; set; }
         public DbSet<SaveGame> SaveGames { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<Leaderboard> Leaderboards { get; set; }
         public DbSet<AdminLog> AdminLogs { get; set; }
     }
